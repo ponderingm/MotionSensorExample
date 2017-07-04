@@ -505,8 +505,7 @@ const struct gyro_reg_s reg =
 	.mem_start_addr = 0x6E,
 	.prgm_start_h   = 0x70
 #ifdef AK89xx_SECONDARY
-	,.raw_compass   = 0x49,
-	.s0_addr        = 0x25,
+	,.s0_addr        = 0x25,
 	.s0_reg         = 0x26,
 	.s0_ctrl        = 0x27,
 	.s1_addr        = 0x28,
@@ -515,7 +514,8 @@ const struct gyro_reg_s reg =
 	.s4_ctrl        = 0x34,
 	.s0_do          = 0x63,
 	.s1_do          = 0x64,
-	.i2c_delay_ctrl = 0x67
+	.i2c_delay_ctrl = 0x67,
+	.raw_compass   = 0x49
 #endif
 };
 const struct hw_s hw =
@@ -2329,7 +2329,7 @@ uint8_t mpu_load_firmware(uint16_t length, const uint8_t *firmware,
 		return 1;
 	for (ii = 0; ii < length; ii += this_write)
 	{
-		this_write = min(LOAD_CHUNK, length - ii);		
+		this_write = min(LOAD_CHUNK, length - ii);
 		for (jj = 0; jj < LOAD_CHUNK; jj++) pgm_buf[jj] = firmware[ii+jj];//pgm_read_byte(firmware + ii + jj);
 		if (mpu_write_mem(ii, this_write, pgm_buf))
 			return 1;
@@ -2847,4 +2847,3 @@ lp_int_restore:
 /**
  *  @}
  */
-
